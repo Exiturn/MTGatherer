@@ -1,5 +1,3 @@
-import { fetchRandomCard } from "@/api";
-import CollectionCard from "@/components/CollectionCard";
 import CardContainer from "@/components/CardContainer";
 
 export default async function Home() {

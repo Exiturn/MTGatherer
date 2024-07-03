@@ -4,7 +4,7 @@ export async function fetchRandomCard(): Promise<CardT> {
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
-  await delay(100);
+  await delay(1000);
 
   const res = await fetch("https://api.scryfall.com/cards/random", {
     next: { revalidate: 0 },
