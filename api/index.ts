@@ -17,11 +17,3 @@ export async function fetchRandomCard(): Promise<CardT> {
   const card: CardT = await res.json();
   return card;
 }
-
-export async function fetchCardImage({ card }: { card: CardT }): Promise<string> {
-  if (!card) {
-    throw new Error("No card provided");
-  }
-  const cardImage = card.image_uris.normal;
-  return cardImage;
-}

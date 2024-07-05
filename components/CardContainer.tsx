@@ -27,20 +27,19 @@ export default function CardContainer({ card }: { card?: CardT }) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="w-[100vw] flex flex-col justify-center items-center">
       <button
         className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
         onClick={handleFetchCards}
       >
         Add new card
       </button>
-      <div className="pt-5 flex flex-wrap w-[90vw] gap-y-5">
+      <div className="pt-5 flex flex-wrap justify-center items-center w-[90vw] gap-y-10">
         {cards?.map((card, index) => (
           <div key={card.name} className="mx-3">
-            {/* <Suspense fallback={<CollectionCard />}>
-              <CollectionCard card={card} key={card.id} />
-            </Suspense> */}
-            <CollectionCard card={card} key={card.id} />
+            <Suspense fallback={<CollectionCard />}>
+              <CollectionCard card={card} key={`${card.id}-${index}`} />
+            </Suspense>
           </div>
         ))}
       </div>

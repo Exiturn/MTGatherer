@@ -74,7 +74,7 @@ export type AllPart = {
 
 export type ImageUris = {
     small:       string;
-    normal:      string;
+    normal:      string | undefined;
     large:       string;
     png:         string;
     art_crop:    string;

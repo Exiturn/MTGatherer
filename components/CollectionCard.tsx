@@ -9,7 +9,6 @@ export default function CollectionCard({
   key,
 }: {
   card?: CardT;
-  isLoading?: boolean;
   key?: string;
 }) {
   const randomCard = card;
@@ -19,36 +18,38 @@ export default function CollectionCard({
   }, [randomCard]);
 
   return !card ? (
-    <Card className="inline-flex flex-col w-[250px] h-[550px] bg-[var(--foreground)] justify-center items-center">
+    <Card className="inline-flex flex-col w-[250px] h-[525px] bg-[var(--foreground)] justify-center items-center">
       Loading...
     </Card>
   ) : (
     <Card
       key={key}
-      className="inline-flex flex-col w-[250px] h-[550px] bg-[var(--foreground)] border-blue-500 border-2"
+      className="inline-flex flex-col w-[250px] min-h-[525px] bg-[var(--foreground)]"
     >
       <Suspense fallback={<figure className="w-full h-[350px]" />}>
         <figure className="w-full h-[350px]">
           <img
-            src={randomCard?.image_uris.normal}
+            src={randomCard?.image_uris?.normal === undefined ? "" : randomCard?.image_uris?.normal}
             alt={randomCard?.name}
-            className="rounded-t-md w-full border-red-500 border-2"
+            className="rounded-t-md w-full"
           />
         </figure>
       </Suspense>
 
-      <div className="flex flex-col">
-        <CardHeader>
-          <h1 className="text-[26px] leading-8">{randomCard!.name}</h1>
-        </CardHeader>
-        <CardDescription className="px-6">
-          {randomCard!.set_name} | ${randomCard!.prices.usd_foil}
-        </CardDescription>
-      </div>
+      <div className="flex flex-col justify-between min-h-[175px] px-6">
+        <div>
+          <CardHeader>
+            <h1 className="text-[21px] leading-5">{randomCard!.name}</h1>
+          </CardHeader>
+          <CardDescription className="">
+            {randomCard!.set_name} | ${randomCard!.prices.usd_foil}
+          </CardDescription>
+        </div>
 
-      <div className="flex justify-start items-center px-6 py-5 gap-4">
-        <p className="text-[16px]">Not Collected</p>
-        <Checkbox id="collected" />
+        <div className="flex justify-start items-center py-5 gap-4">
+          <p className="text-[16px]">Not Collected</p>
+          <Checkbox id="collected" />
+        </div>
       </div>
     </Card>
   );
