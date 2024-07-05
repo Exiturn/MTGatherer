@@ -1,0 +1,19 @@
+/ ** TODO List ** /
+-- UI --
+[] Landing Page
+[] Profile Page
+[] Collection Page
+[] Navbar
+[] Improve Card Design
+[] Hover over card effect
+[] Zustand for client side state management
+
+-- Backend --
+[] Add user authentication w/ OAuth
+[] Add user profile page
+[] Add collection page
+[] Install React Query
+
+-- Database -- 
+[] Add Supabase MySQL Database
+[] Install Drizzle ORM

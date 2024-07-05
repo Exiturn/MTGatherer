@@ -6,7 +6,6 @@ import { useEffect, Suspense } from "react";
 
 export default function CollectionCard({
   card,
-  isLoading,
   key,
 }: {
   card?: CardT;
@@ -20,23 +19,23 @@ export default function CollectionCard({
   }, [randomCard]);
 
   return !card ? (
-    <Card className="inline-flex flex-col w-[250px] min-h-[550px] bg-[var(--foreground)] justify-center items-center">
+    <Card className="inline-flex flex-col w-[250px] h-[550px] bg-[var(--foreground)] justify-center items-center">
       Loading...
     </Card>
   ) : (
     <Card
       key={key}
-      className="inline-flex flex-col w-[250px] min-h-[550px] bg-[var(--foreground)]"
+      className="inline-flex flex-col w-[250px] h-[550px] bg-[var(--foreground)] border-blue-500 border-2"
     >
-      <figure className="w-full">
-        <Suspense fallback={<div className="w-full h-full">Loading...</div>}>
+      <Suspense fallback={<figure className="w-full h-[350px]" />}>
+        <figure className="w-full h-[350px]">
           <img
-            src={randomCard!.image_uris.normal}
-            alt={randomCard!.name}
-            className="rounded-t-md w-full"
+            src={randomCard?.image_uris.normal}
+            alt={randomCard?.name}
+            className="rounded-t-md w-full border-red-500 border-2"
           />
-        </Suspense>
-      </figure>
+        </figure>
+      </Suspense>
 
       <div className="flex flex-col">
         <CardHeader>

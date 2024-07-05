@@ -20,6 +20,10 @@ export default function CardContainer({ card }: { card?: CardT }) {
 
   useEffect(() => {
     handleFetchCards();
+
+    return () => {
+      console.log("cleanup")
+    }
   }, []);
 
   return (
@@ -33,9 +37,10 @@ export default function CardContainer({ card }: { card?: CardT }) {
       <div className="pt-5 flex flex-wrap w-[90vw] gap-y-5">
         {cards?.map((card, index) => (
           <div key={card.name} className="mx-3">
-            <Suspense fallback={<CollectionCard />}>
+            {/* <Suspense fallback={<CollectionCard />}>
               <CollectionCard card={card} key={card.id} />
-            </Suspense>
+            </Suspense> */}
+            <CollectionCard card={card} key={card.id} />
           </div>
         ))}
       </div>
