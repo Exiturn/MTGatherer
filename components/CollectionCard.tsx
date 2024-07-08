@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CardT } from "@/types";
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 
 export default function CollectionCard({
   card,
@@ -12,10 +12,15 @@ export default function CollectionCard({
   key?: string;
 }) {
   const randomCard = card;
+  const DEFAULT_IMAGE_URL =
+    "https://cf.geekdo-images.com/CxJmNl4wR4InjqyNrMdBTw__medium/img/a68vYZcQh95vKDcmOC2bb2Q6qEE=/fit-in/500x500/filters:no_upscale():strip_icc()/pic163749.jpg";
 
-  useEffect(() => {
-    console.log(randomCard);
-  }, [randomCard]);
+  const checkIfDoubleSided = (card: CardT | undefined): boolean => {
+    if (card?.card_faces) {
+      return true;
+    }
+    return false;
+  };
 
   return !card ? (
     <Card className="inline-flex flex-col w-[250px] h-[525px] bg-[var(--foreground)] justify-center items-center">
@@ -30,8 +35,10 @@ export default function CollectionCard({
         <figure className="w-full h-[350px]">
           <img
             src={
-              randomCard?.image_uris?.normal === undefined
-                ? "https://cf.geekdo-images.com/CxJmNl4wR4InjqyNrMdBTw__medium/img/a68vYZcQh95vKDcmOC2bb2Q6qEE=/fit-in/500x500/filters:no_upscale():strip_icc()/pic163749.jpg"
+              checkIfDoubleSided(randomCard) === true
+                ? randomCard?.card_faces?.[0].image_uris?.normal
+                : randomCard?.image_uris?.normal === undefined
+                ? DEFAULT_IMAGE_URL
                 : randomCard?.image_uris?.normal
             }
             alt={randomCard?.name}

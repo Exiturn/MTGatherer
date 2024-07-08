@@ -61,6 +61,22 @@ export type CardT = {
     prices:            Prices;
     related_uris:      RelatedUris;
     purchase_uris:     PurchaseUris;
+    card_faces?:        CardFace[];
+}
+
+export type CardFace = {
+    object: string;
+    name: string;
+    mana_cost: string | undefined;
+    type_line: string;
+    oracle_text: string;
+    colors: string[];
+    power: string;
+    toughness: string;
+    artist: string;
+    artist_id: string;
+    illustration_id: string;
+    image_uris: ImageUris;
 }
 
 export type AllPart = {
