@@ -29,7 +29,11 @@ export default function CollectionCard({
       <Suspense fallback={<figure className="w-full h-[350px]" />}>
         <figure className="w-full h-[350px]">
           <img
-            src={randomCard?.image_uris?.normal === undefined ? "" : randomCard?.image_uris?.normal}
+            src={
+              randomCard?.image_uris?.normal === undefined
+                ? "https://cf.geekdo-images.com/CxJmNl4wR4InjqyNrMdBTw__medium/img/a68vYZcQh95vKDcmOC2bb2Q6qEE=/fit-in/500x500/filters:no_upscale():strip_icc()/pic163749.jpg"
+                : randomCard?.image_uris?.normal
+            }
             alt={randomCard?.name}
             className="rounded-t-md w-full"
           />
@@ -42,7 +46,7 @@ export default function CollectionCard({
             <h1 className="text-[21px] leading-5">{randomCard!.name}</h1>
           </CardHeader>
           <CardDescription className="">
-            {randomCard!.set_name} | ${randomCard!.prices.usd_foil}
+            {randomCard!.set_name} | ${randomCard!.prices.usd}
           </CardDescription>
         </div>
 

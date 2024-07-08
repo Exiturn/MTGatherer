@@ -15,5 +15,5 @@
 [] Install React Query
 
 -- Database -- 
-[] Add Supabase MySQL Database
-[] Install Drizzle ORM
+[] Add Turso SQLite Database
+[X] Install Drizzle ORM
