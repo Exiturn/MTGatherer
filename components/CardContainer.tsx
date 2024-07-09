@@ -13,7 +13,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
   const handleFetchCard = async (name?: string) => {
     if (!name) {
       try {
-        const res = await fetch("/api");
+        const res = await fetch("/api/getCard");
         if (res.ok) {
           const data = await res.json();
           console.log("hfc fired: ", data);
@@ -26,10 +26,13 @@ export default function CardContainer({ card }: { card?: CardT }) {
       }
     } else if (name) {
       try {
-        const specificCard = await fetchSpecificCard({ cardName: name });
-        setCards((prevCards) => {
-          return prevCards ? [...prevCards, specificCard] : [specificCard];
-        });
+        const res = await fetch("/api/getCard?cardName=" + name);
+        if (res.ok) {
+          const card = await res.json();
+          setCards((prevCards) => {
+            return prevCards ? [...prevCards, card] : [card];
+          });
+        }
       } catch (e) {
         console.error(e);
       }
