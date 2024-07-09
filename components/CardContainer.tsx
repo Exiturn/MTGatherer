@@ -3,7 +3,6 @@ import { CardT } from "@/types";
 import CollectionCard from "./CollectionCard";
 import { useState, useEffect, Suspense, useCallback } from "react";
 import { fetchRandomCard, fetchSpecificCard } from "@/api";
-import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function CardContainer({ card }: { card?: CardT }) {
@@ -11,25 +10,29 @@ export default function CardContainer({ card }: { card?: CardT }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const handleFetchCards = async () => {
-    try {
-      const randCard = await fetchRandomCard();
-      setCards((prevCards) => {
-        return prevCards ? [...prevCards, randCard] : [randCard];
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleFetchSpecificCard = async (name: string) => {
-    try {
-      const specificCard = await fetchSpecificCard({ cardName: name });
-      setCards((prevCards) => {
-        return prevCards ? [...prevCards, specificCard] : [specificCard];
-      });
-    } catch (e) {
-      console.error(e);
+  const handleFetchCard = async (name?: string) => {
+    if (!name) {
+      try {
+        const res = await fetch("/api");
+        if (res.ok) {
+          const data = await res.json();
+          console.log("hfc fired: ", data);
+          setCards((prevCards) => {
+            return prevCards ? [...prevCards, data] : [data];
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    } else if (name) {
+      try {
+        const specificCard = await fetchSpecificCard({ cardName: name });
+        setCards((prevCards) => {
+          return prevCards ? [...prevCards, specificCard] : [specificCard];
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 
@@ -44,8 +47,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
   );
 
   useEffect(() => {
-    handleFetchCards();
-
+    handleFetchCard();
     return () => {
       console.log("cleanup");
     };
@@ -55,22 +57,16 @@ export default function CardContainer({ card }: { card?: CardT }) {
     <div className="w-[100vw] flex flex-col justify-center items-center gap-y-5">
       <button
         className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-        onClick={handleFetchCards}
+        onClick={() => handleFetchCard()}
       >
         Add new card
       </button>
       <button
         className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-        onClick={() =>  handleFetchSpecificCard("Elesh Norn")}
+        onClick={() => handleFetchCard("Venerated Rotpriest")}
       >
         Add specific card
       </button>
-      <Link
-        className="text-white py-4 px-6 bg-red-900"
-        href={pathname + "?" + createQueryString("test", "test")}
-      >
-        TEST
-      </Link>
       <div className="pt-5 flex flex-wrap justify-center items-center w-[90vw] gap-y-10">
         {cards?.map((card, index) => (
           <div key={card.name} className="mx-3">

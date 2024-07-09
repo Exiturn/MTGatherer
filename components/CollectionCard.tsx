@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CardT } from "@/types";
-import { useEffect, Suspense, useState } from "react";
+import { useEffect, Suspense } from "react";
 
 export default function CollectionCard({
   card,
@@ -52,8 +52,8 @@ export default function CollectionCard({
           <CardHeader>
             <h1 className="text-[21px] leading-5">{randomCard!.name}</h1>
           </CardHeader>
-          <CardDescription className="">
-            {randomCard!.set_name} | ${randomCard!.prices.usd}
+          <CardDescription>
+            {randomCard!.set_name} | ${randomCard!.prices.usd ? randomCard!.prices.usd : ""}
           </CardDescription>
         </div>
 
