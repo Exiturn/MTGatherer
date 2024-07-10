@@ -4,7 +4,6 @@ import CollectionCard from "./CollectionCard";
 import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Input } from "./ui/input";
-import { check } from "drizzle-orm/mysql-core";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[] | null>([]);
@@ -25,9 +24,9 @@ export default function CardContainer({ card }: { card?: CardT }) {
     try {
       const res = await fetch(url);
       const card = await res.json();
-      
+
       if (checkIfErrorObj(card) === "error") {
-        console.log("error obj", card);
+        console.log("error obj", card.details);
         return;
       }
       setCards((prevCards) => {
@@ -52,8 +51,14 @@ export default function CardContainer({ card }: { card?: CardT }) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const cardName = formData.get("cardName") as string;
-    console.log(cardName);
     handleFetchCard(cardName);
+
+    const cardNameInput = event.currentTarget.querySelector<HTMLInputElement>(
+      "input[name='cardName']"
+    );
+    if (cardNameInput) {
+      cardNameInput.value = "";
+    }
   };
 
   useEffect(() => {

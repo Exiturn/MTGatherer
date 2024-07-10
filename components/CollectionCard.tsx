@@ -11,7 +11,6 @@ export default function CollectionCard({
   card?: CardT;
   key?: string;
 }) {
-  const randomCard = card;
   const DEFAULT_IMAGE_URL =
     "https://cf.geekdo-images.com/CxJmNl4wR4InjqyNrMdBTw__medium/img/a68vYZcQh95vKDcmOC2bb2Q6qEE=/fit-in/500x500/filters:no_upscale():strip_icc()/pic163749.jpg";
 
@@ -23,13 +22,13 @@ export default function CollectionCard({
   };
 
   return !card ? (
-    <Card className="inline-flex flex-col w-[250px] h-[525px] bg-[var(--foreground)] justify-center items-center">
+    <Card className="inline-flex flex-col w-[250px] min-h-[575px] bg-[var(--foreground)] justify-center items-center">
       Loading...
     </Card>
   ) : (
     <Card
       key={key}
-      className="inline-flex flex-col w-[250px] h-[475px] bg-[var(--foreground)] relative"
+      className="inline-flex flex-col w-[250px] h-[525px] bg-[var(--foreground)] relative"
     >
       <div className="absolute w-full top-[-70px] left-0">
         <div className="flex justify-center items-center py-5 gap-4 bg-[var(--background)] text-[var(--foreground)]">
@@ -42,13 +41,13 @@ export default function CollectionCard({
         <figure className="w-full h-[350px]">
           <img
             src={
-              checkIfDoubleSided(randomCard) === true
-                ? randomCard?.card_faces?.[0].image_uris?.normal
-                : randomCard?.image_uris?.normal === undefined
+              checkIfDoubleSided(card) === true
+                ? card?.card_faces?.[0].image_uris?.normal
+                : card?.image_uris?.normal === undefined
                 ? DEFAULT_IMAGE_URL
-                : randomCard?.image_uris?.normal
+                : card?.image_uris?.normal
             }
-            alt={randomCard?.name}
+            alt={card?.name}
             className="rounded-t-md w-full"
           />
         </figure>
@@ -57,14 +56,14 @@ export default function CollectionCard({
       <div className="flex flex-col justify-between px-6 pb-6">
         <div>
           <CardHeader>
-            <h1 className="text-[21px] leading-5">{randomCard!.name}</h1>
+            <h1 className="text-[21px] leading-5">{card!.name}</h1>
           </CardHeader>
           <CardDescription>
-            {randomCard?.set_name} | $
-            {!randomCard?.prices.usd === undefined
+            {card?.set_name} | $
+            {!card?.prices.usd === undefined
               ? "err"
-              : randomCard?.prices.usd
-              ? randomCard?.prices.usd
+              : card?.prices.usd
+              ? card?.prices.usd
               : ""}
           </CardDescription>
         </div>
