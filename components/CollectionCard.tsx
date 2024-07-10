@@ -1,7 +1,7 @@
 "use client";
 import { Card, CardHeader, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CardT } from "@/types";
+import { CardT, ErrorObjectT } from "@/types";
 import { useEffect, Suspense } from "react";
 
 export default function CollectionCard({
@@ -29,8 +29,15 @@ export default function CollectionCard({
   ) : (
     <Card
       key={key}
-      className="inline-flex flex-col w-[250px] min-h-[525px] bg-[var(--foreground)]"
+      className="inline-flex flex-col w-[250px] h-[475px] bg-[var(--foreground)] relative"
     >
+      <div className="absolute w-full top-[-70px] left-0">
+        <div className="flex justify-center items-center py-5 gap-4 bg-[var(--background)] text-[var(--foreground)]">
+          <p className="text-[16px]">Not Collected</p>
+          <Checkbox id="collected" />
+        </div>
+      </div>
+
       <Suspense fallback={<figure className="w-full h-[350px]" />}>
         <figure className="w-full h-[350px]">
           <img
@@ -47,19 +54,19 @@ export default function CollectionCard({
         </figure>
       </Suspense>
 
-      <div className="flex flex-col justify-between min-h-[175px] px-6">
+      <div className="flex flex-col justify-between px-6 pb-6">
         <div>
           <CardHeader>
             <h1 className="text-[21px] leading-5">{randomCard!.name}</h1>
           </CardHeader>
           <CardDescription>
-            {randomCard!.set_name} | ${randomCard!.prices.usd ? randomCard!.prices.usd : ""}
+            {randomCard?.set_name} | $
+            {!randomCard?.prices.usd === undefined
+              ? "err"
+              : randomCard?.prices.usd
+              ? randomCard?.prices.usd
+              : ""}
           </CardDescription>
-        </div>
-
-        <div className="flex justify-start items-center py-5 gap-4">
-          <p className="text-[16px]">Not Collected</p>
-          <Checkbox id="collected" />
         </div>
       </div>
     </Card>

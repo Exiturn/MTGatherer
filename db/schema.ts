@@ -17,6 +17,7 @@ export const cardsTable = sqliteTable('cards', {
     rarity: text('rarity').notNull(),
     prices: real('prices').notNull(), // array of real
     purchase_uris: text('purchase_uris').notNull(), // array of text
+    collected: integer('collected').notNull().default(0),
 })
 
 export type InsertCard = typeof cardsTable.$inferInsert;

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchRandomCard, fetchSpecificCard } from "@/api";
+import { fetchRandomCard, fetchSpecificCard } from "@/lib";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

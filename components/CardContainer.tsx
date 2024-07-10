@@ -1,41 +1,40 @@
 "use client";
-import { CardT } from "@/types";
+import { CardT, ErrorObjectT } from "@/types";
 import CollectionCard from "./CollectionCard";
-import { useState, useEffect, Suspense, useCallback } from "react";
-import { fetchRandomCard, fetchSpecificCard } from "@/api";
+import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Input } from "./ui/input";
+import { check } from "drizzle-orm/mysql-core";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[] | null>([]);
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const checkIfErrorObj = (obj: CardT | ErrorObjectT) => {
+    if (obj.object === "error") {
+      return "error";
+    } else if (obj.object === "card") {
+      return "card";
+    }
+  };
+
   const handleFetchCard = async (name?: string) => {
-    if (!name) {
-      try {
-        const res = await fetch("/api/getCard");
-        if (res.ok) {
-          const data = await res.json();
-          console.log("hfc fired: ", data);
-          setCards((prevCards) => {
-            return prevCards ? [...prevCards, data] : [data];
-          });
-        }
-      } catch (e) {
-        console.error(e);
+    const url = name ? `/api/getCard?cardName=${name}` : "/api/getCard";
+
+    try {
+      const res = await fetch(url);
+      const card = await res.json();
+      
+      if (checkIfErrorObj(card) === "error") {
+        console.log("error obj", card);
+        return;
       }
-    } else if (name) {
-      try {
-        const res = await fetch("/api/getCard?cardName=" + name);
-        if (res.ok) {
-          const card = await res.json();
-          setCards((prevCards) => {
-            return prevCards ? [...prevCards, card] : [card];
-          });
-        }
-      } catch (e) {
-        console.error(e);
-      }
+      setCards((prevCards) => {
+        return prevCards ? [...prevCards, card] : [card];
+      });
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -49,6 +48,14 @@ export default function CardContainer({ card }: { card?: CardT }) {
     [searchParams]
   );
 
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const cardName = formData.get("cardName") as string;
+    console.log(cardName);
+    handleFetchCard(cardName);
+  };
+
   useEffect(() => {
     handleFetchCard();
     return () => {
@@ -58,19 +65,30 @@ export default function CardContainer({ card }: { card?: CardT }) {
 
   return (
     <div className="w-[100vw] flex flex-col justify-center items-center gap-y-5">
-      <button
-        className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-        onClick={() => handleFetchCard()}
-      >
-        Add new card
-      </button>
-      <button
-        className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-        onClick={() => handleFetchCard("Venerated Rotpriest")}
-      >
-        Add specific card
-      </button>
-      <div className="pt-5 flex flex-wrap justify-center items-center w-[90vw] gap-y-10">
+      <div className="flex gap-5 w-full justify-center items-center">
+        <button
+          className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
+          onClick={() => handleFetchCard()}
+        >
+          Add new card
+        </button>
+
+        <form className="flex gap-2" onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            placeholder="e.g Venerated Rotpriest"
+            name="cardName"
+          />
+          <button
+            type="submit"
+            className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <div className="pt-[7rem] flex flex-wrap justify-center items-center w-[90vw] gap-y-[7.5rem]">
         {cards?.map((card, index) => (
           <div key={card.name} className="mx-3">
             <Suspense fallback={<CollectionCard />}>

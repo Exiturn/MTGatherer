@@ -4,7 +4,7 @@
 [] Profile Page
 [] Collection Page
 [] Navbar
-[] Improve Card Design
+[X] Improve Card Design
 [] Hover over card effect
 [] Zustand for client side state management
 
@@ -15,5 +15,11 @@
 [] Install React Query
 
 -- Database -- 
-[] Add Turso SQLite Database
+[X] Add Turso SQLite Database
+[X] Working Migrations
 [X] Install Drizzle ORM
+
+-- Functionality --
+[X] Add working fetch route for client side component fetching
+[] Search bar for card Search
+[] Pagination for collection

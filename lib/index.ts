@@ -1,8 +1,5 @@
 "use server";
-import { CardT } from "@/types";
-import { cardsTable } from "@/db/schema";
-import { queryDbForCard } from "@/lib/cardService";
-import { db } from "@/db";
+import { CardT, ErrorObjectT } from "@/types";
 
 export async function fetchRandomCard(): Promise<CardT> {
   const delay = (ms: number) =>
@@ -26,7 +23,7 @@ export async function fetchSpecificCard({
   cardName,
 }: {
   cardName: string | undefined;
-}): Promise<CardT | any> {
+}): Promise<CardT | ErrorObjectT | any> {
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -42,10 +39,14 @@ export async function fetchSpecificCard({
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch card, please try again.");
+    return res.json();
   }
 
-  const card: CardT = await res.json();
+  const card: CardT | ErrorObjectT = await res.json();
+
+  if (card.object === "error") {
+    return;
+  }
 
   return card;
 }
