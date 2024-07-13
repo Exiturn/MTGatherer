@@ -18,6 +18,7 @@
 [X] Add Turso SQLite Database
 [X] Working Migrations
 [X] Install Drizzle ORM
+[] Add Collections Table | User and Cards Join Table
 
 -- Functionality --
 [X] Add working fetch route for client side component fetching

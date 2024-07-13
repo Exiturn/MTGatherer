@@ -1,6 +1,9 @@
 import CardContainer from "@/components/CardContainer";
+import { auth } from "@/auth/auth";
 
 export default async function Home() {
+  const session = await auth();
+
   return (
     <main className="flex min-h-screen h-fit flex-col items-center justify-between p-24 bg-[var(--background)] overflow-x-hidden">
       <div className="z-10 w-full items-center justify-between text-sm flex flex-col gap-4">

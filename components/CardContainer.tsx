@@ -19,7 +19,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
   };
 
   const handleFetchCard = async (name?: string) => {
-    const url = name ? `/api/getCard?cardName=${name}` : "/api/getCard";
+    const url = name ? `/api/getCard?cardName=${name}` : `/api/getCard`;
 
     try {
       const res = await fetch(url);

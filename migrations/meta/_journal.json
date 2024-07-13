@@ -29,6 +29,13 @@
       "when": 1720450182308,
       "tag": "080724_insert_cards_table",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1720886688588,
+      "tag": "130724_authjs_user_tables",
+      "breakpoints": true
     }
   ]
 }
