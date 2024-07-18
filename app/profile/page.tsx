@@ -6,7 +6,7 @@ const Profile = async () => {
   const session = await auth();
   return (
     <div className="">
-      <pre>Profile Page: {JSON.stringify(session, null, 2)}</pre>
+      <pre>Profile Page: {JSON.stringify(session?.user, null, 2)}</pre>
     </div>
   );
 };

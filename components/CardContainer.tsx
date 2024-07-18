@@ -4,38 +4,12 @@ import CollectionCard from "./CollectionCard";
 import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Input } from "./ui/input";
+import { handleFetchCard } from "@/lib/cardHelpers";
 
 export default function CardContainer({ card }: { card?: CardT }) {
-  const [cards, setCards] = useState<CardT[] | null>([]);
+  const [cards, setCards] = useState<CardT[]>([]);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const checkIfErrorObj = (obj: CardT | ErrorObjectT) => {
-    if (obj.object === "error") {
-      return "error";
-    } else if (obj.object === "card") {
-      return "card";
-    }
-  };
-
-  const handleFetchCard = async (name?: string) => {
-    const url = name ? `/api/getCard?cardName=${name}` : `/api/getCard`;
-
-    try {
-      const res = await fetch(url);
-      const card = await res.json();
-
-      if (checkIfErrorObj(card) === "error") {
-        console.log("error obj", card.details);
-        return;
-      }
-      setCards((prevCards) => {
-        return prevCards ? [...prevCards, card] : [card];
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -51,7 +25,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const cardName = formData.get("cardName") as string;
-    handleFetchCard(cardName);
+    handleFetchCard(setCards, cardName);
 
     const cardNameInput = event.currentTarget.querySelector<HTMLInputElement>(
       "input[name='cardName']"
@@ -62,7 +36,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
   };
 
   useEffect(() => {
-    handleFetchCard();
+    handleFetchCard(setCards);
     return () => {
       console.log("cleanup");
     };
@@ -73,7 +47,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
       <div className="flex gap-5 w-full justify-center items-center">
         <button
           className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-          onClick={() => handleFetchCard()}
+          onClick={() => handleFetchCard(setCards)}
         >
           Add new card
         </button>

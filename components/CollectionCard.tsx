@@ -48,7 +48,7 @@ export default function CollectionCard({
                 : card?.image_uris?.normal
             }
             alt={card?.name}
-            className="rounded-t-md w-full"
+            className="rounded-lg w-full"
           />
         </figure>
       </Suspense>
