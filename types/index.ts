@@ -150,3 +150,11 @@ export type ErrorObjectT = {
   status: number;
   details: string;
 };
+
+export type  SessionUserT = {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean | null;
+  image: string; // Add the image property here
+}

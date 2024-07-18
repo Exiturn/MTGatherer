@@ -65,6 +65,9 @@ export default function CardContainer({ card }: { card?: CardT }) {
             Search
           </button>
         </form>
+        <button>
+          <a href="/profile">Profile</a>
+        </button>
       </div>
 
       <div className="pt-[7rem] flex flex-wrap justify-center items-center w-[90vw] gap-y-[7.5rem]">

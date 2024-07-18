@@ -1,13 +1,13 @@
 import { CardT, ErrorObjectT } from "@/types";
-import { Dispatch } from 'react';
+import { Dispatch } from "react";
 
 const checkIfErrorObj = (obj: CardT | ErrorObjectT) => {
-    if (obj.object === "error") {
-      return "error";
-    } else if (obj.object === "card") {
-      return "card";
-    }
-  };
+  if (obj.object === "error") {
+    return "error";
+  } else if (obj.object === "card") {
+    return "card";
+  }
+};
 
 export const handleFetchCard = async (
   setCards: Dispatch<React.SetStateAction<CardT[]>>,

@@ -4,7 +4,7 @@ import { auth } from "@/auth/auth";
 export default async function Home() {
   const session = await auth();
 
-  // console.log(session);
+  console.log(session);
 
   return (
     <main className="flex min-h-screen h-fit flex-col items-center justify-between p-24 bg-[var(--background)] overflow-x-hidden">
