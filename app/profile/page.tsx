@@ -6,7 +6,7 @@ import ProfilePage from "@/components/ProfilePage";
 const Profile = async () => {
   const session = await auth();
   return (
-    <div className="">
+    <div>
       <pre>Profile Page: {JSON.stringify(session?.user, null, 2)}</pre>
       <ProfilePage user={session?.user as SessionUserT} />
     </div>
