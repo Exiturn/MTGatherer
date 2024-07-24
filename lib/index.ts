@@ -1,5 +1,6 @@
 "use server";
-import { CardT, ErrorObjectT } from "@/types";
+import { CardT, ErrorObjectT, SearchSuggestionsT } from "@/types";
+import { Dispatch } from "react";
 
 export async function fetchRandomCard(): Promise<CardT> {
   const delay = (ms: number) =>
@@ -49,4 +50,24 @@ export async function fetchSpecificCard({
   }
 
   return card;
+}
+
+export async function fetchSuggestions({
+  query,
+}: {
+  query: string | null;
+}): Promise<SearchSuggestionsT | string> {
+  const queryString = query?.replaceAll(" ", "+");
+
+  const res = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${queryString}`, {
+    next: { revalidate: 0 },
+  });
+
+  const suggestions: SearchSuggestionsT = await res.json();
+
+  if (suggestions.total_values === 0) {
+    return `No suggestions found for ${query}`;
+  }
+
+  return suggestions
 }

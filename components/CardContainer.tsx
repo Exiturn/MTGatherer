@@ -4,7 +4,9 @@ import CollectionCard from "./CollectionCard";
 import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Input } from "./ui/input";
-import { handleFetchCard } from "@/lib/cardHelpers";
+import { handleFetchCard } from "@/lib/helpers";
+import SearchSuggestions from "./SearchSuggestions";
+import CardSearchBar from "./CardSearchBar";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[]>([]);
@@ -37,9 +39,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
 
   useEffect(() => {
     handleFetchCard(setCards);
-    return () => {
-      console.log("cleanup");
-    };
+    return () => {};
   }, []);
 
   return (
@@ -49,22 +49,10 @@ export default function CardContainer({ card }: { card?: CardT }) {
           className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
           onClick={() => handleFetchCard(setCards)}
         >
-          Add new card
+          Add random card
         </button>
 
-        <form className="flex gap-2" onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            placeholder="e.g Venerated Rotpriest"
-            name="cardName"
-          />
-          <button
-            type="submit"
-            className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
-          >
-            Search
-          </button>
-        </form>
+        <CardSearchBar submitHandler={handleSubmit} />
       </div>
 
       <div className="pt-[7rem] flex flex-wrap justify-center items-center w-[90vw] gap-y-[7.5rem]">

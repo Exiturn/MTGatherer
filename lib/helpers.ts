@@ -29,3 +29,18 @@ export const handleFetchCard = async (
     console.error(e);
   }
 };
+
+export const handleFetchSuggestions = async (
+  setSuggestions: Dispatch<React.SetStateAction<string[]>>,
+  query: string | undefined
+) => {
+  const url = `/api/suggestions?query=${query}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    setSuggestions(data.data);
+  } catch (e) {
+    console.error(e);
+  }
+};

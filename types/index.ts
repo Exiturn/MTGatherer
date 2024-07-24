@@ -158,3 +158,9 @@ export type  SessionUserT = {
   emailVerified: boolean | null;
   image: string; // Add the image property here
 }
+
+export type SearchSuggestionsT = {
+  object: string;
+  total_values: number;
+  data: string[];
+}
