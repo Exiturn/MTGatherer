@@ -47,7 +47,7 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
     <div>
       <p>Query: {props.query}</p>
 
-      {suggestions!.data?.map((suggestion: string) => (
+      {suggestions?.data?.map((suggestion: string) => (
         <p>{suggestion}</p>
       ))}
     </div>
