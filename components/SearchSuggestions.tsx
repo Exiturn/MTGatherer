@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import { handleFetchSuggestions } from "@/lib/helpers";
+import { fetchSuggestions } from "@/lib";
+import { SearchSuggestionsT } from "@/types";
 
 type SearchSuggestionsProps = {
   query?: string;
@@ -20,15 +22,16 @@ type SearchSuggestionsProps = {
 
 const SearchSuggestions = (props: SearchSuggestionsProps) => {
   const {
-    data: suggestions2,
+    data: suggestions,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["suggestions", props.query],
-    queryFn: () => fetch(`/api/suggestions?query=${props.query}`).then(res => res.json()),
+    queryFn: () => fetchSuggestions({query: props.query}),
+    staleTime: 30000,
   });
 
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+//   const [suggestions, setSuggestions] = useState<string[]>([]);
 
 //   useEffect(() => {
 //     handleFetchSuggestions(setSuggestions, props.query);
@@ -44,7 +47,7 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
     <div>
       <p>Query: {props.query}</p>
 
-      {suggestions2?.data?.map((suggestion: string) => (
+      {suggestions!.data?.map((suggestion: string) => (
         <p>{suggestion}</p>
       ))}
     </div>

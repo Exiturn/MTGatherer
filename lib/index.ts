@@ -24,7 +24,7 @@ export async function fetchSpecificCard({
   cardName,
 }: {
   cardName: string | undefined;
-}): Promise<CardT | ErrorObjectT | any> {
+}): Promise<CardT | ErrorObjectT | null> {
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -46,7 +46,7 @@ export async function fetchSpecificCard({
   const card: CardT | ErrorObjectT = await res.json();
 
   if (card.object === "error") {
-    return;
+    return null;
   }
 
   return card;
@@ -55,18 +55,18 @@ export async function fetchSpecificCard({
 export async function fetchSuggestions({
   query,
 }: {
-  query: string | null;
-}): Promise<SearchSuggestionsT | string> {
+  query: string | undefined | null;
+}): Promise<SearchSuggestionsT | void> {
   const queryString = query?.replaceAll(" ", "+");
 
   const res = await fetch(`https://api.scryfall.com/cards/autocomplete?q=${queryString}`, {
     next: { revalidate: 0 },
   });
 
-  const suggestions: SearchSuggestionsT = await res.json();
+  const suggestions = await res.json();
 
   if (suggestions.total_values === 0) {
-    return `No suggestions found for ${query}`;
+    return;
   }
 
   return suggestions

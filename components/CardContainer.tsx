@@ -3,13 +3,13 @@ import { CardT, ErrorObjectT } from "@/types";
 import CollectionCard from "./CollectionCard";
 import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Input } from "./ui/input";
 import { handleFetchCard } from "@/lib/helpers";
-import SearchSuggestions from "./SearchSuggestions";
 import CardSearchBar from "./CardSearchBar";
+import { useRouter } from "next/router";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[]>([]);
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
