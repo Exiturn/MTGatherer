@@ -6,7 +6,7 @@ import { fetchSuggestions } from "@/lib";
 import { SearchSuggestionsT } from "@/types";
 
 type SearchSuggestionsProps = {
-  query?: string;
+  query?: string | null;
 };
 //   query: string | undefined,
 //   setSuggestions: Dispatch<React.SetStateAction<string[]>>

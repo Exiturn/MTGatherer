@@ -33,7 +33,7 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
           name="cardName"
           onChange={(e) =>
             router.push(
-              pathname + `?` + createQueryString("query", e.target.value)
+              pathname + `?` + createQueryString("q", e.target.value)
             )
           }
         />
@@ -44,7 +44,7 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
           Search
         </button>
       </form>
-      <SearchSuggestions query={`Atraxa`} />
+      <SearchSuggestions query={searchParams.get("q")} />
     </>
   );
 };
