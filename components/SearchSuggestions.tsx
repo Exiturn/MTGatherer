@@ -1,11 +1,7 @@
-"use client";
-import { useState, useEffect } from "react";
-import { QueryClient, useQuery } from "@tanstack/react-query";
-import { handleFetchSuggestions } from "@/lib/helpers";
+import { useQuery } from "@tanstack/react-query";
 import { fetchSuggestions } from "@/lib";
-import { SearchSuggestionsT } from "@/types";
 
-type SearchSuggestionsProps = {
+type SearchSuggestionsPropsT = {
   query?: string | null;
 };
 //   query: string | undefined,
@@ -20,7 +16,7 @@ type SearchSuggestionsProps = {
 //   }
 // };
 
-const SearchSuggestions = (props: SearchSuggestionsProps) => {
+const SearchSuggestions = (props: SearchSuggestionsPropsT) => {
   const {
     data: suggestions,
     isLoading,
@@ -30,8 +26,6 @@ const SearchSuggestions = (props: SearchSuggestionsProps) => {
     queryFn: () => fetchSuggestions({query: props.query}),
     staleTime: 30000,
   });
-
-//   const [suggestions, setSuggestions] = useState<string[]>([]);
 
 //   useEffect(() => {
 //     handleFetchSuggestions(setSuggestions, props.query);

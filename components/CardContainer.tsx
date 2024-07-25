@@ -1,15 +1,12 @@
 "use client";
-import { CardT, ErrorObjectT } from "@/types";
+import { CardT } from "@/types";
 import CollectionCard from "./CollectionCard";
-import { useState, useEffect, Suspense, useCallback, FormEvent } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense, FormEvent } from "react";
 import { handleFetchCard } from "@/lib/helpers";
 import CardSearchBar from "./CardSearchBar";
-import { useRouter } from "next/router";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[]>([]);
-  const searchParams = useSearchParams();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
