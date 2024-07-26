@@ -27,20 +27,8 @@ const SearchSuggestions = (props: SearchSuggestionsPropsT) => {
     staleTime: 30000,
   });
 
-//   useEffect(() => {
-//     handleFetchSuggestions(setSuggestions, props.query);
-//     return () => {};
-//   }, []);
-
-//   useEffect(() => {
-//     console.log("sg", suggestions);
-//     console.log("sg2", suggestions2?.data);
-//   }, [suggestions, suggestions2]);
-
   return (
     <div>
-      <p>Query: {props.query}</p>
-
       {suggestions?.data?.map((suggestion: string) => (
         <p>{suggestion}</p>
       ))}

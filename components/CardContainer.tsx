@@ -1,12 +1,13 @@
 "use client";
 import { CardT } from "@/types";
 import CollectionCard from "./CollectionCard";
-import { useState, useEffect, Suspense, FormEvent } from "react";
+import { useState, useEffect, Suspense, FormEvent, useRef } from "react";
 import { handleFetchCard } from "@/lib/helpers";
 import CardSearchBar from "./CardSearchBar";
 
 export default function CardContainer({ card }: { card?: CardT }) {
   const [cards, setCards] = useState<CardT[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,6 +18,11 @@ export default function CardContainer({ card }: { card?: CardT }) {
     const cardNameInput = event.currentTarget.querySelector<HTMLInputElement>(
       "input[name='cardName']"
     );
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    
     if (cardNameInput) {
       cardNameInput.value = "";
     }
@@ -37,7 +43,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
           Add random card
         </button>
 
-        <CardSearchBar submitHandler={handleSubmit} />
+        <CardSearchBar submitHandler={handleSubmit} inputRef={inputRef} />
       </div>
 
       <div className="pt-[7rem] flex flex-wrap justify-center items-center w-[90vw] gap-y-[7.5rem]">

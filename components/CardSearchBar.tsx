@@ -1,20 +1,20 @@
 "use client";
-import { useCallback, useState } from "react";
-import { Input } from "./ui/input";
+import { useCallback } from "react";
 import SearchSuggestions from "./SearchSuggestions";
 import { useRouter } from "next/navigation";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useDebounce } from "@/lib/hooks/debounceHook";
+import { Command, CommandInput, CommandList } from "@/components/ui/command";
 
 type CardSearchBarPropsT = {
   submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+  inputRef: React.RefObject<HTMLInputElement>;
 };
 
 const CardSearchBar = (props: CardSearchBarPropsT) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [inputValue, setInputValue] = useState("");
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -27,24 +27,26 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value);
       const newQueryString = createQueryString("q", e.target.value);
       router.push(pathname + `?` + newQueryString);
     },
     [createQueryString, pathname, searchParams]
   );
 
-  const debouncedInputChange = useDebounce(handleInputChange, 1000);
+  const debouncedInputChange = useDebounce(handleInputChange, 750);
 
   return (
     <>
       <form className="flex gap-2" onSubmit={props.submitHandler}>
-        <Input
-          type="text"
-          placeholder="e.g Venerated Rotpriest"
-          name="cardName"
-          onChange={debouncedInputChange}
-        />
+        <Command className="w-[400px]">
+          <CommandInput
+            placeholder="e.g Venerated Rotpriest"
+            name="cardName"
+            onChangeCapture={debouncedInputChange}
+            ref={props.inputRef}
+          />
+          <CommandList></CommandList>
+        </Command>
         <button
           type="submit"
           className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
