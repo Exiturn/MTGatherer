@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Card, CardHeader, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -6,10 +7,10 @@ import { useEffect, Suspense } from "react";
 
 export default function CollectionCard({
   card,
-  key,
+  cardKey,
 }: {
   card?: CardT;
-  key?: string;
+  cardKey?: string;
 }) {
   const DEFAULT_IMAGE_URL =
     "https://cf.geekdo-images.com/CxJmNl4wR4InjqyNrMdBTw__medium/img/a68vYZcQh95vKDcmOC2bb2Q6qEE=/fit-in/500x500/filters:no_upscale():strip_icc()/pic163749.jpg";
@@ -27,7 +28,7 @@ export default function CollectionCard({
     </Card>
   ) : (
     <Card
-      key={key}
+      key={cardKey}
       className="inline-flex flex-col w-[250px] h-[525px] bg-[var(--foreground)] relative"
     >
       <div className="absolute w-full top-[-70px] left-0">

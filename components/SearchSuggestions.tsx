@@ -1,5 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchSuggestions } from "@/lib";
+import {
+  CommandGroup,
+  CommandItem,
+  CommandList,
+  CommandEmpty,
+} from "@/components/ui/command";
 
 type SearchSuggestionsPropsT = {
   query?: string | null;
@@ -23,16 +29,23 @@ const SearchSuggestions = (props: SearchSuggestionsPropsT) => {
     error,
   } = useQuery({
     queryKey: ["suggestions", props.query],
-    queryFn: () => fetchSuggestions({query: props.query}),
+    queryFn: () => fetchSuggestions({ query: props.query }),
     staleTime: 30000,
   });
 
   return (
-    <div>
-      {suggestions?.data?.map((suggestion: string) => (
-        <p>{suggestion}</p>
-      ))}
-    </div>
+    <CommandList className="relative">
+      <CommandGroup
+        className={!props.query ? "hidden" : "block"}
+        heading="Suggestions"
+      >
+        {suggestions?.data?.map((suggestion: string, key: number) => (
+          <CommandItem key={`${suggestion}-${Math.random()}`} className="mr-2">
+            {suggestion}
+          </CommandItem>
+        ))}
+      </CommandGroup>
+    </CommandList>
   );
 };
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useDebounce } from "@/lib/hooks/debounceHook";
 import { Command, CommandInput, CommandList } from "@/components/ui/command";
+import { CommandEmpty } from "cmdk";
 
 type CardSearchBarPropsT = {
   submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -45,7 +46,7 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
             onChangeCapture={debouncedInputChange}
             ref={props.inputRef}
           />
-          <CommandList></CommandList>
+          <SearchSuggestions query={searchParams.get("q")} />
         </Command>
         <button
           type="submit"
@@ -54,7 +55,7 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
           Search
         </button>
       </form>
-      <SearchSuggestions query={searchParams.get("q")} />
+      {/* <SearchSuggestions query={searchParams.get("q")} /> */}
     </>
   );
 };

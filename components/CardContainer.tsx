@@ -50,7 +50,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
         {cards?.map((card, index) => (
           <div key={card.name} className="mx-3">
             <Suspense fallback={<CollectionCard />}>
-              <CollectionCard card={card} key={`${card.id}-${index}`} />
+              <CollectionCard card={card} cardKey={card.name} />
             </Suspense>
           </div>
         ))}
