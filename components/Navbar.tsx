@@ -25,7 +25,13 @@ const Navbar = async () => {
         </ul>
       </div>
 
-      <ProfileWidget user={session?.user as SessionUserT} />
+      {session?.user ? (
+        <ProfileWidget user={session?.user as SessionUserT} />
+      ) : (
+        <button>
+          <a href="/api/auth/signin">Login</a>
+        </button>
+      )}
     </nav>
   );
 };

@@ -3,14 +3,14 @@
 [] Landing Page
 [] Profile Page
 [] Collection Page
-[] Navbar
+[X] Navbar
 [X] Improve Card Design
 [] Hover over card effect
 [] Zustand for client side state management
 
 -- Backend --
-[] Add user authentication w/ OAuth
-[] Add user profile page
+[X] Add user authentication w/ OAuth
+[X] Add user profile page
 [] Add collection page
 [] Install React Query
 

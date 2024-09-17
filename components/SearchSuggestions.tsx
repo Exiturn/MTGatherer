@@ -34,7 +34,7 @@ const SearchSuggestions = (props: SearchSuggestionsPropsT) => {
   });
 
   return (
-    <CommandList className="relative">
+    <CommandList>
       <CommandGroup
         className={!props.query ? "hidden" : "block"}
         heading="Suggestions"

@@ -50,7 +50,7 @@ const CardSearchBar = (props: CardSearchBarPropsT) => {
         </Command>
         <button
           type="submit"
-          className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
+          className="w-fit h-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
         >
           Search
         </button>

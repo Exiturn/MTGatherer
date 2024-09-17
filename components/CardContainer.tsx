@@ -22,7 +22,7 @@ export default function CardContainer({ card }: { card?: CardT }) {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    
+
     if (cardNameInput) {
       cardNameInput.value = "";
     }
@@ -35,9 +35,9 @@ export default function CardContainer({ card }: { card?: CardT }) {
 
   return (
     <div className="w-[100vw] flex flex-col justify-center items-center gap-y-5">
-      <div className="flex gap-5 w-full justify-center items-center">
+      <div className="flex gap-5 w-full justify-center">
         <button
-          className="w-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
+          className="w-fit h-fit bg-[var(--foreground)] text-[var(--background)] rounded-md px-4 py-2 font-medium"
           onClick={() => handleFetchCard(setCards)}
         >
           Add random card
