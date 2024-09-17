@@ -26,7 +26,12 @@ const Navbar = async () => {
       </div>
 
       {session?.user ? (
-        <ProfileWidget user={session?.user as SessionUserT} />
+        <div className="flex gap-5">
+          <ProfileWidget user={session?.user as SessionUserT} />
+          <button>
+            <a href="/api/auth/signout">Logout</a>
+          </button>
+        </div>
       ) : (
         <button>
           <a href="/api/auth/signin">Login</a>
